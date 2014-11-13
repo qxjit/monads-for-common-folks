@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if [ $(which boot2docker) ]; then
+  eval $(boot2docker shellinit 2>/dev/null)
+fi;
+
+DIR=$(pwd)
+
+docker run \
+       --volume "$DIR:/data" \
+       --workdir /data \
+       --rm=true \
+       --interactive=true \
+       --tty=true \
+       flipstone/playground-haskell \
+       runhaskell $*
+
